@@ -1,7 +1,12 @@
 import React from 'react'
 
+import { AppProvider } from 'providers/AppProvider'
+
 function App() {
-  return null
+  return (
+    <AppProvider>
+    </AppProvider>
+  )
 }
 
 export default App
