@@ -15,6 +15,7 @@ const Svg = styled.svg`
   position: absolute;
   top: 0;
   left: 0;
+  transform:rotate(180deg)
 `
 
 const Path = styled.path`
@@ -50,13 +51,10 @@ const Navigation = () => {
   return (
     <nav>
       <Container>
-        <Svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-        >
-          <Path fill="#0099ff" fill-opacity="1" d={WAVES_PATHS[waveIndex % WAVES_PATHS.length]}/>
+        <Svg viewBox="0 0 1440 110" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <Path fill-opacity="1" d={WAVES_PATHS[waveIndex % WAVES_PATHS.length]}/>
         </Svg>
-        <AppTitle component="h1" variant="h3" >{process.env.REACT_APP_NAME}</AppTitle>
+        <AppTitle component="h1" variant="h4" >{process.env.REACT_APP_NAME}</AppTitle>
       </Container>
     </nav>
   )

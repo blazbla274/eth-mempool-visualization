@@ -18,6 +18,7 @@ export const theme = createMuiTheme({
     },
   },
   typography: {
+    fontFamily: 'Roboto',
     allVariants: {
       color: 'white',
     }
