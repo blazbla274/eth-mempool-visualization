@@ -1,29 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Typography, TypographyTypeMap } from '@material-ui/core'
 import { OverridableComponent } from '@material-ui/core/OverridableComponent'
 import styled from 'styled-components'
 
-import { WAVES_PATHS, WAVES_TIMEOUT } from './constants'
-import { GasPrices } from './GasPrices'
+import { GasPrice } from './GasPrice'
+import { WavesAnimation } from './WavesAnimation'
 
 const Container = styled.div`
   position: sticky;
-  display: flex;
-  justify-content: space-between;
   width: 100vw;
   height: 200px;
 `
 
-const Svg = styled.svg`
+const PositionedWavesAnimation = styled(WavesAnimation)`
   position: absolute;
   top: 0;
   left: 0;
-  transform:rotate(180deg)
-`
-
-const Path = styled.path`
-  fill: ${({ theme }) => theme.palette.primary.main};
-  transition: all ${WAVES_TIMEOUT}ms ease-in-out;
 `
 
 const AppTitle = styled(Typography)`
@@ -34,35 +26,23 @@ const AppTitle = styled(Typography)`
   }
 ` as OverridableComponent<TypographyTypeMap<{}, "span">>
 
-const Navigation = () => {
-  const [waveIndex, setWaveIndex] = useState<number>(0)
+const PositionedGasPrice = styled(GasPrice)`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing(1)}px;
+  left: 50%;
+  transform: translateX(-50%);
+`
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWaveIndex(index => {
-        const random = Math.floor(Math.random() * WAVES_PATHS.length)
-        return Math.floor(random) !== index
-          ? random
-          : index + 1
-      })
-    }, WAVES_TIMEOUT)
-    setWaveIndex(index => index + 1)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  return (
-    <nav>
-      <Container>
-        <Svg viewBox="0 0 1440 110" version="1.1" xmlns="http://www.w3.org/2000/svg">
-          <Path fill-opacity="1" d={WAVES_PATHS[waveIndex % WAVES_PATHS.length]}/>
-        </Svg>
-        <AppTitle component="h1" variant="h4" >{process.env.REACT_APP_NAME}</AppTitle>
-        <GasPrices />
-        <div />
-      </Container>
-    </nav>
-  )
-}
+const Navigation = () => (
+  <nav>
+    <Container>
+      <PositionedWavesAnimation />
+      <AppTitle component="h1" variant="h4">
+        {process.env.REACT_APP_NAME}
+      </AppTitle>
+      <PositionedGasPrice />
+    </Container>
+  </nav>
+)
 
 export { Navigation }

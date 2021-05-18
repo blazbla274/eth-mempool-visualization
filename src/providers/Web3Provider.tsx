@@ -8,7 +8,7 @@ import React, {
 import Web3 from 'web3'
 
 interface Web3ContextState {
-  web3Instance: any
+  web3: Web3 | null
 }
 
 const Web3Context = createContext<Web3ContextState | null>(null)
@@ -37,7 +37,7 @@ const Web3Provider: React.FC = ({ children }) => {
   }, [])
 
   const contextValue = useMemo(() => ({
-    web3Instance
+    web3: web3Instance
   }), [web3Instance])
 
   return (
