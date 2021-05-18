@@ -4,6 +4,7 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles'
 import { combineProviders } from 'react-combine-providers'
 
 import { theme } from 'styles/theme'
+import { Web3Provider } from './Web3Provider'
 
 const AppProvider: React.FC = ({ children }) => {
   const providers = combineProviders()
@@ -12,6 +13,7 @@ const AppProvider: React.FC = ({ children }) => {
   // @ts-ignore
   providers.push(MuiThemeProvider, { theme })
   providers.push(StyledThemeProvider, { theme })
+  providers.push(Web3Provider)
 
   const MasterProvider = providers.master()
 

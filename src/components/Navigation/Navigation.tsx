@@ -4,9 +4,12 @@ import { OverridableComponent } from '@material-ui/core/OverridableComponent'
 import styled from 'styled-components'
 
 import { WAVES_PATHS, WAVES_TIMEOUT } from './constants'
+import { GasPrices } from './GasPrices'
 
 const Container = styled.div`
   position: sticky;
+  display: flex;
+  justify-content: space-between;
   width: 100vw;
   height: 200px;
 `
@@ -55,6 +58,8 @@ const Navigation = () => {
           <Path fill-opacity="1" d={WAVES_PATHS[waveIndex % WAVES_PATHS.length]}/>
         </Svg>
         <AppTitle component="h1" variant="h4" >{process.env.REACT_APP_NAME}</AppTitle>
+        <GasPrices />
+        <div />
       </Container>
     </nav>
   )
