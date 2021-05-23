@@ -12,14 +12,21 @@ const Container = styled.div`
   height: 200px;
 `
 
+const PaddingBox = styled.div`
+  padding: ${({ theme }) => theme.spacing(2)}px;
+  background-color: ${({ theme }) => theme.palette.primary.main};
+`
+
 const PositionedWavesAnimation = styled(WavesAnimation)`
   position: absolute;
-  top: 0;
+  top: ${({ theme }) => theme.spacing(4) - 2}px;
   left: 0;
 `
 
 const AppTitle = styled(Typography)`
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
 
   &.MuiTypography-root {
     padding: ${({ theme }) => theme.spacing(2)}px;
@@ -36,6 +43,7 @@ const PositionedGasPrice = styled(GasPrice)`
 const Navigation = () => (
   <nav>
     <Container>
+      <PaddingBox />
       <PositionedWavesAnimation />
       <AppTitle component="h1" variant="h4">
         {process.env.REACT_APP_NAME}
