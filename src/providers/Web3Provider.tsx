@@ -9,6 +9,7 @@ import Web3 from 'web3'
 
 interface Web3ContextState {
   web3: Web3 | null
+  web3Socket: Web3 | null
 }
 
 const Web3Context = createContext<Web3ContextState | null>(null)
@@ -24,21 +25,34 @@ const useWeb3Context = (): Web3ContextState => {
 
 const Web3Provider: React.FC = ({ children }) => {
   const [web3Instance, setWeb3Instance] = useState<Web3 | null>(null)
+  const [web3SocketInstance, setWeb3SocketInstance] = useState<Web3 | null>(null)
 
   useEffect(() => {
     const infraNodeEndpoint = process.env.REACT_APP_INFURA_ENDPOINT
+    const infraNodeWebSocket = process.env.REACT_APP_INFURA_WEBSOCKET
 
-    if (infraNodeEndpoint) {
+    if (infraNodeEndpoint && infraNodeWebSocket) {
       const web3 = new Web3(infraNodeEndpoint)
+      const web3socket = new Web3(new Web3.providers.WebsocketProvider(infraNodeWebSocket, {
+        reconnect: {
+            auto: true,
+            delay: 5000,
+            maxAttempts: 5,
+            onTimeout: false
+        }
+      }))
+
       setWeb3Instance(web3)
+      setWeb3SocketInstance(web3socket)
     } else {
       throw new Error('ETH node endpoint must be seted.')
     }
   }, [])
 
   const contextValue = useMemo(() => ({
-    web3: web3Instance
-  }), [web3Instance])
+    web3: web3Instance,
+    web3Socket: web3SocketInstance
+  }), [web3Instance, web3SocketInstance])
 
   return (
     <Web3Context.Provider value={contextValue}>
