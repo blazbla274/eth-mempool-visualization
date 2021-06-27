@@ -19,6 +19,24 @@ export interface BlockHeader {
   uncles?: Array<any>
 }
 
+export interface Transaction {
+  blockHash: string | null
+  blockNumber: number | null
+  from: string
+  gas: number
+  gasPrice: string
+  hash: string
+  input: string
+  nonce: number
+  r?: string
+  s?: string
+  to: string | null
+  transactionIndex: number | null
+  type?: string | null
+  v?: string
+  value: string
+}
+
 export type Subscription = {
   unsubscribe: () => void
 }

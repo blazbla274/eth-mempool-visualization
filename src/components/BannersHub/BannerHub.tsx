@@ -2,21 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 import Web3 from 'web3'
 
-import { Banner, BannerListItem } from 'components/BannersHub/Banner/Banner'
+import { ListBanner, BannerListItem } from 'components/BannersHub/ListBanner'
+import { TransactionBanner } from 'components/BannersHub/TransactionBanner'
 import { useCurrentBlock } from 'hooks/useCurrentBlock'
-import { useTransactionsCount } from 'hooks/useTransactionsCount'
 import { useGasPrice } from 'hooks/useGasPrice'
 
 const Container = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: flex-start;
 `
 
 const BannerHub = (): JSX.Element => {
   const block = useCurrentBlock()
   const gasPrice = useGasPrice()
-
-  // const cc = useTransactionsCount(100)
 
   const blockInformationsList: BannerListItem[] = [
     {
@@ -33,23 +32,13 @@ const BannerHub = (): JSX.Element => {
     },
   ]
 
-  const globalInformationsList: BannerListItem[] = [
-    {
-      title: 'HASH RATE',
-      value: '402,300 GH/S',
-    },
-  ]
-
   return (
     <Container>
-      <Banner
+      <ListBanner
         title="Last block informations"
         list={blockInformationsList}
       />
-      <Banner
-        title="Global informations"
-        list={globalInformationsList}
-      />
+      <TransactionBanner />
     </Container>
   )
 }
