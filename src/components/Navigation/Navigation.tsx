@@ -35,7 +35,7 @@ const AppTitle = styled(Typography)`
 
 const PositionedGasPrice = styled(GasPrice)`
   position: absolute;
-  top: ${({ theme }) => theme.spacing(1)}px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
 `
