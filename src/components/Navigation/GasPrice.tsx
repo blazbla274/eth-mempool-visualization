@@ -14,10 +14,10 @@ const GasPrice = (props: React.HTMLAttributes<HTMLDivElement>): JSX.Element => {
 
   return (
     <Container {...props}>
-      <Typography variant="h5">
-        Current gas price
+      <Typography variant="h6">
+        Gas price
       </Typography>
-      <Typography>
+      <Typography variant="h5">
         {`${currentGasPrice} gwei`}
       </Typography>
     </Container>
