@@ -7,7 +7,7 @@ import { GasPrice } from './GasPrice'
 import { WavesAnimation } from './WavesAnimation'
 
 const Container = styled.div`
-  position: sticky;
+  position: fixed;
   width: 100vw;
   height: 200px;
 `

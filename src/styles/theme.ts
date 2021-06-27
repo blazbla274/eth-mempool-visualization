@@ -1,5 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 import { plPL } from '@material-ui/core/locale'
+import { TypeBackground } from '@material-ui/core/styles/createPalette'
 
 export const theme = createMuiTheme({
   palette: {
@@ -13,9 +14,10 @@ export const theme = createMuiTheme({
       secondary: 'white',
     },
     background: {
+      banner: '#e5f3ff',
       default: '#333342',
       paper: '#3b3d4e'
-    },
+    } as Partial<TypeBackground>,
   },
   typography: {
     fontFamily: 'Roboto',
