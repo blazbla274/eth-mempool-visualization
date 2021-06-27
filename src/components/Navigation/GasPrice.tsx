@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Web3 from 'web3'
 
 import { useGasPrice } from 'hooks/useGasPrice'
 import { Typography } from '@material-ui/core'
@@ -10,7 +11,7 @@ const Container = styled.div`
 `
 
 const GasPrice = (props: React.HTMLAttributes<HTMLDivElement>): JSX.Element => {
-  const currentGasPrice = useGasPrice()
+  const gasPrice = useGasPrice()
 
   return (
     <Container {...props}>
@@ -18,7 +19,7 @@ const GasPrice = (props: React.HTMLAttributes<HTMLDivElement>): JSX.Element => {
         Gas price
       </Typography>
       <Typography variant="h5">
-        {`${currentGasPrice} gwei`}
+        {`${Web3.utils.fromWei(gasPrice.toString(), 'gwei')} gwei`}
       </Typography>
     </Container>
   )

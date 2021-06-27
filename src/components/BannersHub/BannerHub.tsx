@@ -1,7 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import Web3 from 'web3'
 
 import { Banner, BannerListItem } from 'components/BannersHub/Banner/Banner'
+import { useCurrentBlock } from 'hooks/useCurrentBlock'
+import { useTransactionsCount } from 'hooks/useTransactionsCount'
+import { useGasPrice } from 'hooks/useGasPrice'
 
 const Container = styled.div`
   display: flex;
@@ -9,15 +13,23 @@ const Container = styled.div`
 `
 
 const BannerHub = (): JSX.Element => {
+  const block = useCurrentBlock()
+  const gasPrice = useGasPrice()
+
+  // const cc = useTransactionsCount(100)
 
   const blockInformationsList: BannerListItem[] = [
     {
       title: 'NUMBER',
-      value: '2234',
+      value: block.number.toLocaleString(),
     },
     {
-      title: 'TRANSACTIONS COUNT',
-      value: '129',
+      title: 'TOTAL GAS USED',
+      value: block.gasUsed.toLocaleString(),
+    },
+    {
+      title: 'ESTIMATED TOTAL GAS COST',
+      value: `${Web3.utils.fromWei((block.gasUsed * (gasPrice || 1)).toString(), 'ether')} ETH`,
     },
   ]
 
@@ -31,7 +43,7 @@ const BannerHub = (): JSX.Element => {
   return (
     <Container>
       <Banner
-        title="Block informations"
+        title="Last block informations"
         list={blockInformationsList}
       />
       <Banner
