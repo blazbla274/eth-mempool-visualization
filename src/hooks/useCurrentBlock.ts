@@ -36,12 +36,11 @@ const useCurrentBlock = (): BlockHeader => {
         const block = await web3.eth.getBlock(currentBlockNumber)
         setBlock(block)
 
-        const subscription = web3Socket.eth.subscribe('newBlockHeaders', function(error, result) {
+        subscriptionInstance = web3Socket.eth.subscribe('newBlockHeaders', function(error, result) {
           if (!error) {
             setBlock(result)
           }
         })
-        subscriptionInstance = subscription
       }
     }
     init()

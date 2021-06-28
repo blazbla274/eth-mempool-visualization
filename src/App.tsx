@@ -2,7 +2,7 @@ import React from 'react'
 
 import { AppProvider } from 'providers/AppProvider'
 import { Navigation } from 'components/Navigation/Navigation'
-import { PendingTransactions } from 'components/Navigation/PendingTransactions'
+import { BlockBuildingStage } from 'components/BlockBuildingStage/BlockBuildingStage'
 import { BannerHub } from 'components/BannersHub/BannerHub'
 
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
     <AppProvider>
       <Navigation />
       <BannerHub />
-      <PendingTransactions />
+      <BlockBuildingStage />
     </AppProvider>
   )
 }
