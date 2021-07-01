@@ -6,11 +6,13 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button
+  Button,
+  CircularProgress
 } from '@material-ui/core'
 import styled from 'styled-components'
 
 import { Ul, Li, ListItemTitle, ListItemValue } from 'components/BannersHub/ListBanner'
+import { useBlock } from 'hooks/useBlock'
 
 const Transition = forwardRef(function Transition(props, ref) {
   // @ts-ignore
@@ -23,7 +25,7 @@ const StyledListItemTitle = styled(ListItemTitle)`
 
 const StyledUl = styled(Ul)`
   margin: 0;
-  width: 340px;
+  width: 360px;
 `
 
 const HashLi = styled(Li)`
@@ -34,6 +36,11 @@ const HashLi = styled(Li)`
 const StyledDialogTitle = styled(DialogTitle)`
   text-align: center;
   cursor: pointer;
+`
+
+const BlockSpan = styled.span`
+  font-weight: 400;
+  font-size: 16px;
 `
 
 export type BlockDialogState = {
@@ -53,11 +60,7 @@ const BlockDialog = ({ state, onClose: handleClose }: BlockDialogProps) => {
     ? state
     : { blockNumber: undefined }
 
-  const size = 10
-  const gasUsed = 10
-  const hash = 10
-  const transactions = 10
-  const timestamp = 10
+  const [block, isLoading] = useBlock(blockNumber)
 
   const handleEthScanRedirect = () => {
     window.open(`https://etherscan.io/block/${blockNumber}`)
@@ -72,35 +75,41 @@ const BlockDialog = ({ state, onClose: handleClose }: BlockDialogProps) => {
       >
         {}
         <StyledDialogTitle onClick={handleEthScanRedirect}>
-          {`Block: ${blockNumber}`}
+          <BlockSpan>Block: </BlockSpan>
+          {blockNumber}
         </StyledDialogTitle>
         <DialogContent>
-          <StyledUl>
-            <HashLi onClick={handleEthScanRedirect}>
-              <StyledListItemTitle>Hash</StyledListItemTitle>
-              <ListItemValue>{hash}</ListItemValue>
-            </HashLi>
-            <Li>
-              <StyledListItemTitle>Size</StyledListItemTitle>
-              <ListItemValue>{`${size} bytes`}</ListItemValue>
-            </Li>
-            <Li>
-              <StyledListItemTitle>Gas Used</StyledListItemTitle>
-              <ListItemValue>{`${gasUsed} gas units`}</ListItemValue>
-            </Li>
-            <Li>
-              <StyledListItemTitle>Commited transactions</StyledListItemTitle>
-              <ListItemValue>{transactions}</ListItemValue>
-            </Li>
-            <Li>
-              <StyledListItemTitle>Block collated time</StyledListItemTitle>
-              <ListItemValue>{timestamp}</ListItemValue>
-            </Li>
-        </StyledUl>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <StyledUl>
+              <HashLi onClick={handleEthScanRedirect}>
+                <StyledListItemTitle>Hash</StyledListItemTitle>
+                <ListItemValue title={block?.hash}>
+                  {block?.hash}
+                </ListItemValue>
+              </HashLi>
+              <Li>
+                <StyledListItemTitle>Size</StyledListItemTitle>
+                <ListItemValue>{`${block?.size} bytes`}</ListItemValue>
+              </Li>
+              <Li>
+                <StyledListItemTitle>Gas Used</StyledListItemTitle>
+                <ListItemValue>{`${block?.gasUsed} gas units`}</ListItemValue>
+              </Li>
+              <Li>
+                <StyledListItemTitle>Block collated time</StyledListItemTitle>
+                <ListItemValue>{block?.timestamp}</ListItemValue>
+              </Li>
+            </StyledUl>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Close
+          </Button>
+          <Button onClick={handleEthScanRedirect} color="inherit">
+            Go To EtherScan
           </Button>
         </DialogActions>
       </Dialog>

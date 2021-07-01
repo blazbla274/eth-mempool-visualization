@@ -31,6 +31,8 @@ export const ListItemTitle = styled.p`
 export const ListItemValue = styled.p`
   list-decoration: none;
   margin: ${({ theme }) => theme.spacing(0.5)}px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export interface BannerListItem {

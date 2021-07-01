@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import { lineBinderLoop, setupBinderLine } from './blocksBinderLine'
-import { transactions } from './transactions'
+import { transactionsLoop } from './transactions'
 import { blocksLoop } from './transactionsBlocks'
 
 export const pixiApp = new PIXI.Application({
@@ -12,16 +12,7 @@ export const pixiApp = new PIXI.Application({
 setupBinderLine()
 
 const gameLoop = (delta: number) => {
-  transactions.forEach(({ graphic, initX, initY, speed }) => {
-    graphic.x = graphic.x + initX > pixiApp.screen.width / 2
-      ? graphic.x - speed.x * delta
-      : graphic.x + speed.x * delta
-
-    graphic.y = graphic.y + initY > pixiApp.screen.height / 2
-      ? graphic.y - speed.y * delta
-      : graphic.y + speed.y * delta
-  })
-
+  transactionsLoop(delta)
   blocksLoop()
   lineBinderLoop()
 }
@@ -31,5 +22,6 @@ const listener = (event: any) => {
   pixiApp.view.style.height = `${window.innerHeight / 2}px`
   pixiApp.resize()
 }
+
 pixiApp.ticker.add(gameLoop)
 window.addEventListener('resize', listener)
