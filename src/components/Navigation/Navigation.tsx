@@ -33,6 +33,11 @@ const AppTitle = styled(Typography)`
   }
 ` as OverridableComponent<TypographyTypeMap<{}, "span">>
 
+const ViewerParagraph = styled.p`
+  margin: 0;
+  font-size: 18px;
+`
+
 const PositionedGasPrice = styled(GasPrice)`
   position: absolute;
   top: 0;
@@ -40,13 +45,37 @@ const PositionedGasPrice = styled(GasPrice)`
   transform: translateX(-50%);
 `
 
+const UnderWave = styled.div`
+  position: absolute;
+  background-color: ${({ theme }) => theme.palette.primary.main};
+  border: 3px solid white;
+  box-shadow: 0px 4px 4px 2px rgba(0,0,0,0.35);
+`
+
+const GasPriceUnderWave = styled(UnderWave)`
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 68px;
+`
+
+const AppTitleUnderWave = styled(UnderWave)`
+  width: 100px;
+  height: 62px;
+  border-left: 0px;
+`
+
 const Navigation = () => (
   <nav>
     <Container>
       <PaddingBox />
+      <GasPriceUnderWave />
+      <AppTitleUnderWave />
       <PositionedWavesAnimation />
       <AppTitle component="h1" variant="h4">
-        {process.env.REACT_APP_NAME}
+        ETH
+        <ViewerParagraph>VIEWER</ViewerParagraph>
       </AppTitle>
       <PositionedGasPrice />
     </Container>
