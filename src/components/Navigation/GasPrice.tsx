@@ -18,6 +18,9 @@ const Container = styled.div`
 
 const GasPrice = (props: React.HTMLAttributes<HTMLDivElement>): JSX.Element => {
   const gasPrice = useGasPrice()
+  const roundedPrice = Math.round(
+    (parseFloat(Web3.utils.fromWei(gasPrice.toString(), 'gwei')) * 100) / 100
+  )
 
   return (
     <Container {...props}>
@@ -25,7 +28,7 @@ const GasPrice = (props: React.HTMLAttributes<HTMLDivElement>): JSX.Element => {
         Gas price
       </Typography>
       <Typography variant="h5">
-        {`${Web3.utils.fromWei(gasPrice.toString(), 'gwei')} gwei`}
+        {`${roundedPrice} gwei`}
       </Typography>
     </Container>
   )
