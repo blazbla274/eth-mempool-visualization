@@ -4,7 +4,9 @@ import { useCurrentBlock } from 'hooks/useCurrentBlock'
 import { useWeb3Context } from 'providers/Web3Provider'
 import { Subscription } from 'types/web3'
 import { pendingTransactionsSubscriptionFactory } from './pendingTransactions.utils'
-import { pixiApp, transactions } from './PixiSpplication/PixiApplication'
+import { pixiApp } from './PixiSpplication/PixiApplication'
+import { clearTransactions } from './PixiSpplication/transactions'
+import { saveLastBlockTransactionsCount, spawnNewBlock } from './PixiSpplication/transactionsBlocks'
 
 const BlockBuildingStage = () => {
   const { web3Socket } = useWeb3Context()
@@ -30,11 +32,10 @@ const BlockBuildingStage = () => {
   }, [web3Socket])
 
   useEffect(() => {
-    if(pixiApp) {
-      transactions.forEach(child => {
-        pixiApp.stage.removeChild(child.obj)
-      })
-      transactions.splice(0, transactions.length)
+    if(pixiApp && block.number) {
+      saveLastBlockTransactionsCount()
+      clearTransactions()
+      spawnNewBlock()
     }
   }, [block])
 

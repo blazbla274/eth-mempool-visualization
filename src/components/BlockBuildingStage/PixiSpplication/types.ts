@@ -1,9 +1,22 @@
-export interface TransactionAnimationObject {
-  obj: any
-  initX: number
-  initY: number
+import * as PIXI from 'pixi.js'
+interface AnimationObject {
+  graphic: PIXI.Graphics
   speed: {
     x: number
     y: number
   }
+}
+export interface TransactionAnimation extends AnimationObject{
+  graphic: PIXI.Graphics
+  initX: number
+  initY: number
+}
+
+export interface BlockAnimation extends AnimationObject{
+  targetPositionX: number
+  targetPositionY: number
+  x: number
+  y: number
+  text: PIXI.Text,
+  transactions: number | null
 }

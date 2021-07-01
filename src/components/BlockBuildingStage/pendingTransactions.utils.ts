@@ -1,20 +1,21 @@
 import * as PIXI from 'pixi.js'
 import { STAGE_PADDING } from 'constants/pixiStage'
-import { pixiApp, pushTransaction } from './PixiSpplication/PixiApplication'
+import { pixiApp } from './PixiSpplication/PixiApplication'
+import { pushTransaction } from './PixiSpplication/transactions'
 
 export const pendingTransactionsSubscriptionFactory = () =>
   (error: Error, transactionHash: string) => {
     if (!error && pixiApp) {
-      const gr  = new PIXI.Graphics()
       const x = Math.floor(Math.random() * (pixiApp.screen.width - 2 * STAGE_PADDING + 1)) + STAGE_PADDING
       const y = Math.floor(Math.random() * (pixiApp.screen.height - 2 * STAGE_PADDING + 1)) + STAGE_PADDING
 
+      const transaction  = new PIXI.Graphics()
       //@ts-ignore
-      gr.beginFill(0x73b6ff)
-      gr.drawCircle(x, y, STAGE_PADDING / 2)
-      gr.endFill()
-      gr.zIndex = 1
-      pixiApp.stage.addChildAt(gr, 0)
+      transaction.beginFill(0x73b6ff)
+      transaction.drawCircle(x, y, STAGE_PADDING / 2)
+      transaction.endFill()
+      transaction.zIndex = 1
+      pixiApp.stage.addChildAt(transaction, 0)
 
       const speed = {
         x: Math.abs(window.innerWidth / 2 - x) / 100,
@@ -22,7 +23,7 @@ export const pendingTransactionsSubscriptionFactory = () =>
       }
 
       pushTransaction({
-        obj: gr,
+        graphic: transaction,
         initX: x,
         initY: y,
         speed
