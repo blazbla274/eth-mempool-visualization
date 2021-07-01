@@ -10,8 +10,8 @@ export const theme = createMuiTheme({
       dark: '#0277cb'
     },
     text: {
-      primary: 'white',
-      secondary: 'white',
+      primary: '#fff',
+      secondary: '#f2f2f2',
     },
     background: {
       banner: '#e5f3ff',
@@ -22,7 +22,7 @@ export const theme = createMuiTheme({
   typography: {
     fontFamily: 'Roboto',
     allVariants: {
-      color: 'white',
+      color: '#fff',
     }
   }
 }, plPL)
