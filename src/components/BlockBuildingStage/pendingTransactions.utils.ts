@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 import { STAGE_PADDING } from 'constants/pixiStage'
-import { pixiApp } from './PixiSpplication/PixiApplication'
-import { pushTransaction } from './PixiSpplication/transactions'
+import { pixiApp } from './PixiApplication/PixiApplication'
+import { pushTransaction } from './PixiApplication/transactions'
 
 export const pendingTransactionsSubscriptionFactory = () =>
   (error: Error, transactionHash: string) => {

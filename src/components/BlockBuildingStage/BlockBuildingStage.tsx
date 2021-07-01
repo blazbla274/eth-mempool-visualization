@@ -1,16 +1,18 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useCurrentBlock } from 'hooks/useCurrentBlock'
 import { useWeb3Context } from 'providers/Web3Provider'
 import { Subscription } from 'types/web3'
+import { BlockDialog, BlockDialogState } from 'components/BlockDialog/BlockDialog'
 import { pendingTransactionsSubscriptionFactory } from './pendingTransactions.utils'
-import { pixiApp } from './PixiSpplication/PixiApplication'
-import { clearTransactions } from './PixiSpplication/transactions'
-import { saveLastBlockTransactionsCount, spawnNewBlock } from './PixiSpplication/transactionsBlocks'
+import { pixiApp } from './PixiApplication/PixiApplication'
+import { clearTransactions } from './PixiApplication/transactions'
+import { saveLastBlockData, spawnNewBlock } from './PixiApplication/transactionsBlocks'
 
 const BlockBuildingStage = () => {
   const { web3Socket } = useWeb3Context()
   const block = useCurrentBlock()
+  const [dialogState, setDialogState] = useState<BlockDialogState>(() => ({ isOpen: false }))
 
   useEffect(() => {
     let web3SocketSubscription: Subscription | null = null
@@ -33,13 +35,29 @@ const BlockBuildingStage = () => {
 
   useEffect(() => {
     if(pixiApp && block.number) {
-      saveLastBlockTransactionsCount()
+      saveLastBlockData(block.number)
       clearTransactions()
-      spawnNewBlock()
+      spawnNewBlock({
+        number: block.number,
+        onClick: (number) => {
+          setDialogState({
+            isOpen: true,
+            blockNumber: number
+          })
+        },
+      })
     }
   }, [block])
 
-  return <div id="pixi-anchor"/>
+  return (
+    <>
+      <div id="pixi-anchor"/>
+      <BlockDialog
+        state={dialogState}
+        onClose={() => setDialogState({ isOpen: false })}
+      />
+    </>
+  )
 }
 
 export { BlockBuildingStage }

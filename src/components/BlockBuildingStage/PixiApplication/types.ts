@@ -13,6 +13,7 @@ export interface TransactionAnimation extends AnimationObject{
 }
 
 export interface BlockAnimation extends AnimationObject{
+  number?: number,
   targetPositionX: number
   targetPositionY: number
   x: number
